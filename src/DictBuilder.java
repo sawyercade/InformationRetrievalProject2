@@ -12,7 +12,7 @@ public class DictBuilder {
     }
 
     /**
-     * Always add to postings before adding to Dict.
+     * Adds or increments a dict entry for this term. Always add to postings before adding to Dict.
      * @param term
      * @throws IRException
      */
@@ -21,13 +21,19 @@ public class DictBuilder {
             if(dictEntries.get(term).getPostingList()==null){
                 throw new IRException("Dict contains an entry with no postings pointer");
             }
-            dictEntries.get(term).setNumDocs(dictEntries.get(term).getNumDocs()+1);
+            dictEntries.get(term).setNumDocs(dictEntries.get(term).getNumDocs()+1); //increment the numDocs of this term by one
         }
         else{
-            dictEntries.put(term, new DictEntry(term, 1, postingsBuilder.getPostingList(term)));
+            dictEntries.put(term, new DictEntry(term, 1, postingsBuilder.getPostingList(term))); //create a new dict entry for this term
         }
     }
 
+    /**
+     * Adds a posting location to a dict entry.
+     * @param term
+     * @param location
+     * @throws IRException
+     */
     public void addPostingLocation(String term, Long location) throws IRException{
         if(!dictEntries.containsKey(term)){
             throw new IRException("Cannot add a location to a term that doesn't exist in dictEntries");

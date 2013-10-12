@@ -7,6 +7,13 @@ public class PostingsBuilder {
         postings = new HashMap<String, List<Posting>>();
     }
 
+    /**
+     * Adds an entry to the postings Map
+     * @param term
+     * @param docId
+     * @param weight
+     * @throws IRException
+     */
     public void addPosting(String term, Integer docId, Float weight) throws IRException{
         if (containsPosting(term)){ //if we've already added this term before
             postings.get(term).add(new Posting(docId, weight)); //add this docId and weight to the end of the postings list for this term
@@ -18,6 +25,12 @@ public class PostingsBuilder {
         }
     }
 
+    /**
+     * Returns the postings for a term
+     * @param term
+     * @return
+     * @throws IRException
+     */
     public List<Posting> getPostingList(String term) throws IRException {
         if (!postings.containsKey(term)){
             throw new IRException("postings does not contain a list of postings for the term " + term);
@@ -25,6 +38,12 @@ public class PostingsBuilder {
         return postings.get(term);
     }
 
+    /**
+     * Returns true if a posting exists for the term.
+     * @param term
+     * @return
+     * @throws IRException
+     */
     public boolean containsPosting(String term) throws IRException {
         if (postings.containsKey(term)){
             if(postings.get(term) == null || postings.get(term).isEmpty()){
@@ -35,6 +54,10 @@ public class PostingsBuilder {
         return false;
     }
 
+    /**
+     * Returns the Map<String, List<Posting>> of postings
+     * @return
+     */
     public Map<String, List<Posting>> getPostings() {
         return postings;
     }
