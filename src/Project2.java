@@ -77,13 +77,16 @@ public class Project2 {
         int numFiles = inFiles.length;
         File outDir = new File(args[1]);
 
-        //stores tokens and localHashTable across documents
-        TokenCollector collector = new TokenCollector();
-        InvertedFileBuilder invertedFileBuilder = new InvertedFileBuilder();
+
 
         Random random = new Random(System.currentTimeMillis());
         //Process each file
         for(int i = 0; i < 50; i++){
+
+            //stores tokens and localHashTable across documents
+            TokenCollector collector = new TokenCollector();
+            InvertedFileBuilder invertedFileBuilder = new InvertedFileBuilder();
+
             buildingStartTime = System.currentTimeMillis();
             List<File> sampleFiles = new ArrayList<File>();
             for (int j = 0; j < (i+1)*10; j++){
@@ -102,18 +105,20 @@ public class Project2 {
             }
             buildEndTime = System.currentTimeMillis();
             runtimes.add(buildEndTime-buildingStartTime);
+
+            System.out.println("Number of files: " + numFiles);
+            System.out.println("Number of unique tokens: " + collector.getUniqueTokens());
+            System.out.println("Number of non-unique tokens: " + collector.getNonuniqueTokens());
+            //System.out.println("Runtime of tokenizing and building in memory: " + (buildEndTime-buildingStartTime)+"ms");
+//        System.out.println("Runtime of writing dict and post to file: " + (writeEndTime-writeStartTime)+"ms");
+            System.out.println("Total runtime: " + (System.currentTimeMillis() - startTimeMs)+"ms");
         }
 
 //        writeStartTime = System.currentTimeMillis();
 //        invertedFileBuilder.printToFiles(outDir.getAbsolutePath().concat("\\dict.txt"), outDir.getAbsolutePath().concat("\\post.txt"));
 //        writeEndTime = System.currentTimeMillis();
 
-        System.out.println("Number of files: " + numFiles);
-        System.out.println("Number of unique tokens: " + collector.getUniqueTokens());
-        System.out.println("Number of non-unique tokens: " + collector.getNonuniqueTokens());
-        //System.out.println("Runtime of tokenizing and building in memory: " + (buildEndTime-buildingStartTime)+"ms");
-//        System.out.println("Runtime of writing dict and post to file: " + (writeEndTime-writeStartTime)+"ms");
-        System.out.println("Total runtime: " + (System.currentTimeMillis() - startTimeMs)+"ms");
+
     }
 
     public static void writeSortedTokens(List<TermFreq> termFreqs, String outputFilepath) throws IOException{
