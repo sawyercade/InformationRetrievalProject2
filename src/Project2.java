@@ -25,7 +25,7 @@ public class Project2 {
         File outDir = new File(args[1]);
 
 
-        TokenCollector collector = new TokenCollector(); //stores tokens and frequencies across documents
+        TokenCollector collector = new TokenCollector(); //stores tokens and localHashTable across documents
         Map<Integer, String> fileNames = new HashMap<Integer, String>(); //Maps docId to filename
 
         InvertedFileBuilder invertedFileBuilder = new InvertedFileBuilder(); //Builds the inverted file
@@ -36,7 +36,7 @@ public class Project2 {
         for(File inFile : inFiles){
             fileNames.put(fileCounter, inFile.getName());
             DocumentAnalyzer analyzer = new DocumentAnalyzer(); //processes and tokenizes the document
-            Map<String, Integer> freqs = analyzer.tokenize(inFile.getAbsolutePath()); //tokenize the doc
+            Map<String, Integer> freqs = analyzer.tokenize(inFile.getAbsolutePath()).getFrequencies(); //tokenize the doc
             collector.addTokens(freqs);
 
             for (Map.Entry<String, Integer> entry : freqs.entrySet()){
@@ -77,7 +77,7 @@ public class Project2 {
         int numFiles = inFiles.length;
         File outDir = new File(args[1]);
 
-        //stores tokens and frequencies across documents
+        //stores tokens and localHashTable across documents
         TokenCollector collector = new TokenCollector();
         InvertedFileBuilder invertedFileBuilder = new InvertedFileBuilder();
 
@@ -92,7 +92,7 @@ public class Project2 {
             int fileCounter = 0;
             for(File inFile : sampleFiles){
                 DocumentAnalyzer analyzer = new DocumentAnalyzer(); //processes the document
-                Map<String, Integer> freqs = analyzer.tokenize(inFile.getAbsolutePath());
+                Map<String, Integer> freqs = analyzer.tokenize(inFile.getAbsolutePath()).getFrequencies();
                 collector.addTokens(freqs);
 
                 for (Map.Entry<String, Integer> entry : freqs.entrySet()){
